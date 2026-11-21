@@ -1,0 +1,90 @@
+pluginManagement {
+    buildscript {
+        repositories {
+            google()
+            mavenCentral()
+            maven("https://storage.googleapis.com/r8-releases/raw") {
+                content { includeModule("com.android.tools", "r8") }
+            }
+        }
+        dependencies {
+            // Kotlin 2.4 requires D8/R8 9.1.29 or newer.
+            classpath("com.android.tools:r8:9.1.29")
+        }
+    }
+    resolutionStrategy {
+        eachPlugin {
+            val regex = "com.android.(library|application)".toRegex()
+            if (regex matches requested.id.id) {
+                useModule("com.android.tools.build:gradle:${requested.version}")
+            }
+        }
+    }
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven(url = "https://www.jitpack.io")
+    }
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("kotlinx") {
+            from(files("gradle/kotlinx.versions.toml"))
+        }
+        create("androidx") {
+            from(files("gradle/androidx.versions.toml"))
+        }
+        create("compose") {
+            from(files("gradle/compose.versions.toml"))
+        }
+        create("sylibs") {
+            from(files("gradle/sy.versions.toml"))
+        }
+    }
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        google()
+        maven(url = "https://www.jitpack.io")
+    }
+}
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "Komikku"
+include(":chimahon")
+project(":chimahon").projectDir = file("chimahon")
+if (providers.gradleProperty("includeLocalDictionaryHarness").orNull == "true") {
+    include(":dictionary-fidelity")
+    project(":dictionary-fidelity").projectDir = file("tools/dictionary-harness/fidelity")
+}
+include(":app")
+include(":core-metadata")
+include(":core:archive")
+include(":core:common")
+include(":data")
+include(":domain")
+include(":i18n")
+// ANK -->
+include(":i18n-ank")
+// ANK <--
+// KMK -->
+include(":i18n-kmk")
+include(":flagkit")
+// KMK <--
+// SY -->
+include(":i18n-sy")
+// SY <--
+include(":macrobenchmark")
+include(":presentation-core")
+include(":presentation-widget")
+include(":source-api")
+
+
+include(":source-local")
+val hasLocalOcr = file("chimahon-local-ocr/build.gradle.kts").exists()
+if (hasLocalOcr) {
+    include(":chimahon-local-ocr")
+}

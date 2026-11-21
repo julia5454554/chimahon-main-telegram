@@ -1,0 +1,41 @@
+# Build files
+.gradle
+# .vscode
+.kotlin
+build
+.cxx
+
+# IDE files
+*.iml
+.idea/*
+!.idea/icon.png
+/captures
+.history
+
+# Configuration files
+local.properties
+chimahon-release.jks
+keystore_base64.txt
+
+# macOS specific files
+.DS_Store
+
+# App secrets
+/app/client_secrets.json
+/app/google-services.json
+*.jks
+app/standard/preview/*
+
+# Chimahon additions
+*.md
+/ref
+/reference/
+/external_ocr_refs
+AGENTS.md
+/app/src/main/assets/ocr-test
+/app/src/main/assets/client_secrets.json
+/temp_hoshi
+/AnkiconnectAndroid
+*.patch
+/docs
+/tools

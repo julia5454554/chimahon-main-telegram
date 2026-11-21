@@ -1,0 +1,24 @@
+package eu.kanade.domain.sync.models
+
+data class SyncSettings(
+    val libraryEntries: Boolean = true,
+    val categories: Boolean = true,
+    val chapters: Boolean = true,
+    val tracking: Boolean = true,
+    val history: Boolean = true,
+    val appSettings: Boolean = true,
+    val extensionStores: Boolean = true,
+    val sourceSettings: Boolean = true,
+    val privateSettings: Boolean = false,
+
+    // SY -->
+    val customInfo: Boolean = true,
+    val readEntries: Boolean = true,
+    val savedSearchesFeeds: Boolean = true,
+    // SY <--
+    // Chimahon -->
+    val novels: Boolean = true,
+    val sourceNovelLibrary: Boolean = true,
+    // Chimahon <--
+    val animeEntries: Boolean = true,
+)
